@@ -25,6 +25,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -80,7 +82,8 @@ public class FiltraNegociacoesIT {
   
   @After
   public void desligaNavegador() {
-    driver.quit();
+    driver.close();
+//    driver.quit();
   }
   
   @Test
@@ -137,7 +140,23 @@ public class FiltraNegociacoesIT {
   }
   
   private void iniciaFirefox() {
-    driver = new FirefoxDriver();
+//    The Selenium [Java client] also comes with
+//    a [`org.openqa.selenium.firefox.FirefoxOptions`] helper for
+//    constructing the [`moz:firefoxOptions`] capabilities object:
+//
+//    FirefoxOptions options = new FirefoxOptions();
+//    options.setLogLevel(FirefoxDriverLogLevel.TRACE);
+//    WebDriver driver = new FirefoxDriver(options);
+//
+//    As with C#, the log output is helpfully propagated to stdout.
+//
+//[Java client]: https://seleniumhq.github.io/selenium/docs/api/java/
+//[`org.openqa.selenium.firefox.FirefoxOptions`]: https://seleniumhq.github.io/selenium/docs/api/java/org/openqa/selenium/firefox/FirefoxOptions.html
+    
+    
+    FirefoxOptions options = new FirefoxOptions();
+    options.setLogLevel(FirefoxDriverLogLevel.TRACE);
+    driver = new FirefoxDriver(options);
   }
   
   private void iniciaPhantomJs() {
