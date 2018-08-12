@@ -67,7 +67,7 @@ public class FiltraNegociacoesIT {
       
       iniciaChrome();
       
-    } else if (System.getProperty("webdriver.firefox.driver") != null) {
+    } else if (System.getProperty("webdriver.gecko.driver") != null) {
   
       iniciaFirefox();
   
