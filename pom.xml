@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.com.caelum.argentum</groupId>
@@ -79,8 +79,8 @@
 
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-server</artifactId>
-			<version>3.3</version>
+			<artifactId>selenium-java</artifactId>
+			<version>2.41.0</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -120,37 +120,37 @@
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
- 			
-                     	<plugin>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-pmd-plugin</artifactId>
-                                <version>3.6</version>
-                                <executions>
-                                        <execution>
-                                                <phase>verify</phase>
-                                                <goals>
-                                                        <goal>pmd</goal>
-                                                </goals>
-                                        </execution>
-                                </executions>
 
-                        </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.6</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>pmd</goal>
+						</goals>
+					</execution>
+				</executions>
 
-                        <plugin>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-surefire-report-plugin</artifactId>
-                                <version>2.19.1</version>
-                                <executions>
-                                        <execution>
-                                                <phase>test</phase>
-                                                <goals>
-                                                        <goal>report-only</goal>
-                                                </goals>
-                                        </execution>
-                                </executions>
+			</plugin>
 
-                        </plugin>
-			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.19.1</version>
+				<executions>
+					<execution>
+						<phase>test</phase>
+						<goals>
+							<goal>report-only</goal>
+						</goals>
+					</execution>
+				</executions>
+
+			</plugin>
+
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -166,17 +166,17 @@
 			</plugin>
 
 		</plugins>
-  </build>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jxr-plugin</artifactId>
-        <version>2.3</version>
-      </plugin>
-    </plugins>
-  </reporting>
-  <profiles>
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>2.3</version>
+			</plugin>
+		</plugins>
+	</reporting>
+	<profiles>
 		<profile>
 			<id>testes-integracao</id>
 			<dependencies>
@@ -274,7 +274,6 @@
 				</dependency>
 
 			</dependencies>
-
 			<build>
 				<plugins>
 					<plugin>
@@ -282,7 +281,7 @@
 						<artifactId>maven-failsafe-plugin</artifactId>
 						<version>2.19.1</version>
 						<configuration>
-					        <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+							<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
 						</configuration>
 						<executions>
 							<execution>

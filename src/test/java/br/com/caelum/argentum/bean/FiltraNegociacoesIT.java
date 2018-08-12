@@ -29,112 +29,112 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 @RunWith(Arquillian.class)
 public class FiltraNegociacoesIT {
-
-	private static final SimpleDateFormat SDF = new SimpleDateFormat("ddMMyyyy");
-	private static final String HTTP_LOCALHOST_8888 = "http://localhost:8888";
-	private WebDriver driver;
-
-	@Deployment
-	public static WebArchive createWar() {
-
-		MavenDependencyResolver resolver = DependencyResolvers.use(
-				MavenDependencyResolver.class).loadMetadataFromPom("pom.xml");
-
-		WebArchive webArchive = ShrinkWrap
-				.create(WebArchive.class, "ROOT.war")
-				.addPackages(true, "br.com.caelum.argentum")
-				.addAsLibraries(
-						resolver.artifact("com.sun.faces:jsf-api")
-								.artifact("com.sun.faces:jsf-impl")
-								.artifact("org.primefaces:primefaces")
-								.artifact("com.thoughtworks.xstream:xstream")
-								.resolveAs(GenericArchive.class))
-				.as(ExplodedImporter.class)
-				.importDirectory(new File("src/main/webapp"))
-				.as(WebArchive.class);
-
-		return webArchive;
-	}
-
-	@Before
-	public void iniciaNavegador() {
-		if (System.getProperty("phantomjs.binary.path") != null) {
-			
-			iniciaPhantomJs();
-			
-		} else if (System.getProperty("webdriver.chrome.driver") != null) {
-			
-			iniciaChrome();
-			
-		} else {
-			
-			throw new RuntimeException("Nao eh possivel determinar o navegador para execucao dos testes.");
-			
-		}
-	}
-
-	@After
-	public void desligaNavegador() {
-		driver.quit();
-	}
-
-	@Test
-	public void verificaResultadosFiltradosNaTabela()
-			throws InterruptedException {
-		driver.navigate().to(HTTP_LOCALHOST_8888 + "/index.xhtml");
-
-		List<WebElement> linhasDaTabelaDeNotificacoes = driver.findElements(By
-				.xpath("//*[@id='tabelaNegociacoes']/div[2]/table/tbody/tr"));
-
-		int totalDeNotificacoesAntesDoFiltro = linhasDaTabelaDeNotificacoes
-				.size();
-
-		WebElement filtroDataDe = driver.findElement(By.name("filtroDataDe"));
-		WebElement filtroDataAte = driver.findElement(By.name("filtroDataAte"));
-
-		filtroDataDe.click(); // especialmente para o inputMask
-		filtroDataDe.sendKeys(SDF.format(hojeMenos10Dias()));
-
-		filtroDataAte.click(); // especialmente para o inputMask
-		filtroDataAte.sendKeys(SDF.format(hojeMais10Dias()));
-
-		filtroDataAte.submit();
-
-		WebElement botaoFiltro = driver.findElement(By.name("botaoFiltro"));
-
-		botaoFiltro.click();
-
-		Thread.sleep(2000L);
-
-		linhasDaTabelaDeNotificacoes = driver.findElements(By
-				.xpath("//*[@id='tabelaNegociacoes']/div[2]/table/tbody/tr"));
-
-		int totalDeNotificacoesDepoisDoFiltroAplicado = linhasDaTabelaDeNotificacoes
-				.size();
-
-		Assert.assertTrue(totalDeNotificacoesDepoisDoFiltroAplicado < totalDeNotificacoesAntesDoFiltro);
-	}
-
-	private Date hojeMais10Dias() {
-		Calendar data = Calendar.getInstance();
-		data.add(Calendar.DAY_OF_MONTH, 10);
-		return data.getTime();
-	}
-
-	private Date hojeMenos10Dias() {
-		Calendar data = Calendar.getInstance();
-		data.add(Calendar.DAY_OF_MONTH, -10);
-		return data.getTime();
-	}
-
-	private void iniciaChrome() {
-		driver = new ChromeDriver();
-	}
-
-	private void iniciaPhantomJs() {
-		DesiredCapabilities dc = new DesiredCapabilities();
-		dc.setJavascriptEnabled(true);
-		driver = new PhantomJSDriver(dc);
-	}
-	
+  
+  private static final SimpleDateFormat SDF = new SimpleDateFormat("ddMMyyyy");
+  private static final String HTTP_LOCALHOST_8888 = "http://localhost:8888";
+  private WebDriver driver;
+  
+  @Deployment
+  public static WebArchive createWar() {
+    
+    MavenDependencyResolver resolver = DependencyResolvers.use(
+        MavenDependencyResolver.class).loadMetadataFromPom("pom.xml");
+    
+    WebArchive webArchive = ShrinkWrap
+        .create(WebArchive.class, "ROOT.war")
+        .addPackages(true, "br.com.caelum.argentum")
+        .addAsLibraries(
+            resolver.artifact("com.sun.faces:jsf-api")
+                .artifact("com.sun.faces:jsf-impl")
+                .artifact("org.primefaces:primefaces")
+                .artifact("com.thoughtworks.xstream:xstream")
+                .resolveAs(GenericArchive.class))
+        .as(ExplodedImporter.class)
+        .importDirectory(new File("src/main/webapp"))
+        .as(WebArchive.class);
+    
+    return webArchive;
+  }
+  
+  @Before
+  public void iniciaNavegador() {
+    if (System.getProperty("phantomjs.binary.path") != null) {
+      
+      iniciaPhantomJs();
+      
+    } else if (System.getProperty("webdriver.chrome.driver") != null) {
+      
+      iniciaChrome();
+      
+    } else {
+      
+      throw new RuntimeException("Nao eh possivel determinar o navegador para execucao dos testes.");
+      
+    }
+  }
+  
+  @After
+  public void desligaNavegador() {
+    driver.quit();
+  }
+  
+  @Test
+  public void verificaResultadosFiltradosNaTabela()
+      throws InterruptedException {
+    driver.navigate().to(HTTP_LOCALHOST_8888 + "/index.xhtml");
+    
+    List<WebElement> linhasDaTabelaDeNotificacoes = driver.findElements(By
+        .xpath("//*[@id='tabelaNegociacoes']/div[2]/table/tbody/tr"));
+    
+    int totalDeNotificacoesAntesDoFiltro = linhasDaTabelaDeNotificacoes
+        .size();
+    
+    WebElement filtroDataDe = driver.findElement(By.name("filtroDataDe"));
+    WebElement filtroDataAte = driver.findElement(By.name("filtroDataAte"));
+    
+    filtroDataDe.click(); // especialmente para o inputMask
+    filtroDataDe.sendKeys(SDF.format(hojeMenos10Dias()));
+    
+    filtroDataAte.click(); // especialmente para o inputMask
+    filtroDataAte.sendKeys(SDF.format(hojeMais10Dias()));
+    
+    filtroDataAte.submit();
+    
+    WebElement botaoFiltro = driver.findElement(By.name("botaoFiltro"));
+    
+    botaoFiltro.click();
+    
+    Thread.sleep(2000L);
+    
+    linhasDaTabelaDeNotificacoes = driver.findElements(By
+        .xpath("//*[@id='tabelaNegociacoes']/div[2]/table/tbody/tr"));
+    
+    int totalDeNotificacoesDepoisDoFiltroAplicado = linhasDaTabelaDeNotificacoes
+        .size();
+    
+    Assert.assertTrue(totalDeNotificacoesDepoisDoFiltroAplicado < totalDeNotificacoesAntesDoFiltro);
+  }
+  
+  private Date hojeMais10Dias() {
+    Calendar data = Calendar.getInstance();
+    data.add(Calendar.DAY_OF_MONTH, 10);
+    return data.getTime();
+  }
+  
+  private Date hojeMenos10Dias() {
+    Calendar data = Calendar.getInstance();
+    data.add(Calendar.DAY_OF_MONTH, -10);
+    return data.getTime();
+  }
+  
+  private void iniciaChrome() {
+    driver = new ChromeDriver();
+  }
+  
+  private void iniciaPhantomJs() {
+    DesiredCapabilities dc = new DesiredCapabilities();
+    dc.setJavascriptEnabled(true);
+    driver = new PhantomJSDriver(dc);
+  }
+  
 }
