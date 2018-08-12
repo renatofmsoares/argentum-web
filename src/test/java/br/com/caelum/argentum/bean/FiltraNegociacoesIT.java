@@ -24,6 +24,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -66,6 +67,10 @@ public class FiltraNegociacoesIT {
       
       iniciaChrome();
       
+    } else if (System.getProperty("webdriver.firefox.driver") != null) {
+  
+      iniciaFirefox();
+  
     } else {
       
       throw new RuntimeException("Nao eh possivel determinar o navegador para execucao dos testes.");
@@ -129,6 +134,10 @@ public class FiltraNegociacoesIT {
   
   private void iniciaChrome() {
     driver = new ChromeDriver();
+  }
+  
+  private void iniciaFirefox() {
+    driver = new FirefoxDriver();
   }
   
   private void iniciaPhantomJs() {
